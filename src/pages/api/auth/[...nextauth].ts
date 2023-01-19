@@ -1,5 +1,5 @@
 import NextAuth, { type NextAuthOptions } from "next-auth";
-import DiscordProvider from "next-auth/providers/discord";
+import CredentialsProvider from "next-auth/providers/credentials";
 // Prisma adapter for NextAuth, optional and can be removed
 import { PrismaAdapter } from "@next-auth/prisma-adapter";
 
@@ -8,20 +8,51 @@ import { prisma } from "../../../server/db";
 
 export const authOptions: NextAuthOptions = {
   // Include user.id on session
+  secret: env.NEXTAUTH_SECRET,
+  session: {
+    strategy: "jwt",
+  },
+  jwt: {
+    secret: env.NEXTAUTH_SECRET,
+  },
   callbacks: {
-    session({ session, user }) {
-      if (session.user) {
-        session.user.id = user.id;
+    jwt({ token, user }) {
+      if (user) {
+        token.id = user.id;
       }
+      return token;
+    },
+    session({ session, user, token }) {
+      if (session.user) {
+        const id = (token.id as string) || user.id;
+        session.user.id = id;
+      }
+
       return session;
     },
   },
   // Configure one or more authentication providers
   adapter: PrismaAdapter(prisma),
   providers: [
-    DiscordProvider({
-      clientId: env.DISCORD_CLIENT_ID,
-      clientSecret: env.DISCORD_CLIENT_SECRET,
+    CredentialsProvider({
+      name: "Credentials",
+      credentials: {
+        email: { label: "Email", type: "email", placeholder: "Your email" },
+        password: { label: "Password", type: "password" },
+      },
+      async authorize(credentials) {
+        const user = await Promise.resolve({
+          name: "John Smith",
+          email: "john.smit@example.com",
+          id: "1",
+        });
+
+        if (user) {
+          return user;
+        }
+
+        return null;
+      },
     }),
     /**
      * ...add more providers here

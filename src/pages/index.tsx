@@ -4,6 +4,7 @@ import Link from "next/link";
 import { signIn, signOut, useSession } from "next-auth/react";
 
 import { api } from "../utils/api";
+import { useRouter } from "next/router";
 
 const Home: NextPage = () => {
   const hello = api.example.hello.useQuery({ text: "from tRPC" });
@@ -60,6 +61,7 @@ export default Home;
 
 const AuthShowcase: React.FC = () => {
   const { data: sessionData } = useSession();
+  const router = useRouter();
 
   const { data: secretMessage } = api.example.getSecretMessage.useQuery(
     undefined, // no input
@@ -77,6 +79,12 @@ const AuthShowcase: React.FC = () => {
         onClick={sessionData ? () => void signOut() : () => void signIn()}
       >
         {sessionData ? "Sign out" : "Sign in"}
+      </button>
+      <button
+        className="rounded-full bg-white/10 px-10 py-3 font-semibold text-white no-underline transition hover:bg-white/20"
+        onClick={() => void router.push("/signup")}
+      >
+        Sign up
       </button>
     </div>
   );
