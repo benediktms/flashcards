@@ -1,16 +1,15 @@
 import React from 'react';
-import { useFieldArray, useForm } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 import { Button } from '../components/Button';
 import { signupSchema } from '../validators/auth-schema';
 import type { SignUpSchemaType } from '../validators/auth-schema';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { cn } from '../utils/cn';
+import { InputField } from '../components/InputField';
 
 const SignUp = () => {
   const {
     register,
     handleSubmit,
-    watch,
     formState: { errors, isSubmitting },
   } = useForm<SignUpSchemaType>({
     resolver: zodResolver(signupSchema),
@@ -25,14 +24,6 @@ const SignUp = () => {
     });
   });
 
-  const inputStyles = cn(
-    'mt-1 mb-3 block w-full rounded border border-solid px-4 py-2 w-full',
-    ' text-xl font-normal text-gray-700',
-    'border-gray-300 bg-white bg-clip-padding',
-    'transition ease-in-out focus:border-blue-600 focus:bg-white focus:text-gray-700 focus:outline-none',
-    'disabled:cursor-not-allowed disabled:bg-gray-100 disabled:text-gray-400',
-  );
-
   return (
     <div className="my-10 flex flex-col items-center">
       <div className="max-w-md ">
@@ -46,13 +37,12 @@ const SignUp = () => {
             >
               Name
             </label>
-            <input
+            <InputField
               disabled={isSubmitting}
               {...register('name', { required: true })}
               type="text"
               name="name"
               placeholder="Name"
-              className={inputStyles}
             />
             <p className="text-red-500">{errors.name?.message}</p>
             <label
@@ -61,13 +51,12 @@ const SignUp = () => {
             >
               Email
             </label>
-            <input
+            <InputField
               disabled={isSubmitting}
               {...register('email', { required: true })}
               type="text"
               name="email"
               placeholder="Email address"
-              className={inputStyles}
             />
             <p className="text-red-500">{errors.email?.message}</p>
             <label
@@ -76,13 +65,12 @@ const SignUp = () => {
             >
               Password
             </label>
-            <input
+            <InputField
               disabled={isSubmitting}
               {...register('password', { required: true })}
               type="password"
               name="password"
               placeholder="Password"
-              className={inputStyles}
             />
             <p className="text-red-500">{errors.password?.message}</p>
             <label
@@ -91,13 +79,12 @@ const SignUp = () => {
             >
               Confirm password
             </label>
-            <input
+            <InputField
               disabled={isSubmitting}
               {...register('passwordConfirmation', { required: true })}
               type="password"
               name="passwordConfirmation"
               placeholder="Confirm password"
-              className={inputStyles}
             />
             <p className="text-red-500">
               {errors.passwordConfirmation?.message}
