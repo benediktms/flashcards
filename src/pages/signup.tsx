@@ -50,64 +50,42 @@ const SignUp = () => {
         {/* eslint-disable-next-line @typescript-eslint/no-misused-promises */}
         <form onSubmit={onSubmit}>
           <div className="mb-6 max-w-sm">
-            <label
-              htmlFor="name"
-              className="mb-2 block text-sm font-bold text-gray-700"
-            >
-              Name
-            </label>
             <InputField
               disabled={isSubmitting}
               register={register}
               path="name"
               type="text"
               placeholder="Name"
+              label="Name"
+              error={errors.name?.message}
             />
-            <p className="text-red-500">{errors.name?.message}</p>
-            <label
-              htmlFor="email"
-              className="mb-2 block text-sm font-bold text-gray-700"
-            >
-              Email
-            </label>
             <InputField
               disabled={isSubmitting}
               register={register}
               path="email"
               type="email"
               placeholder="Email address"
+              label="Email"
+              error={errors.email?.message}
             />
-            <p className="text-red-500">{errors.email?.message}</p>
-            <label
-              htmlFor="password"
-              className="mb-2 block text-sm font-bold text-gray-700"
-            >
-              Password
-            </label>
             <InputField
               disabled={isSubmitting}
               register={register}
               path="password"
               type="password"
               placeholder="Password"
+              label="Password"
+              error={errors.password?.message}
             />
-            <p className="text-red-500">{errors.password?.message}</p>
-            <label
-              htmlFor="passwordConfirmation"
-              className="mb-2 block text-sm font-bold text-gray-700"
-            >
-              Confirm password
-            </label>
             <InputField
               disabled={isSubmitting}
               register={register}
               path="passwordConfirmation"
               type="password"
               placeholder="Confirm password"
+              label="Confirm password"
+              error={errors.passwordConfirmation?.message}
             />
-            <p className="text-red-500">
-              {errors.passwordConfirmation?.message}
-            </p>
 
             <Button
               type="submit"
