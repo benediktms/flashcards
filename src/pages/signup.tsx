@@ -5,13 +5,15 @@ import { signupSchema } from '../validators/auth-schema';
 import type { SignUpSchemaType } from '../validators/auth-schema';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { InputField } from '../components/InputField';
+import { LoadingSpinner } from '../components/LoadingSpinner';
 
 const SignUp = () => {
   const {
     register,
     handleSubmit,
-    formState: { errors, isSubmitting },
+    formState: { errors, isSubmitting, isValid },
   } = useForm<SignUpSchemaType>({
+    mode: 'onBlur',
     resolver: zodResolver(signupSchema),
   });
 
@@ -92,6 +94,12 @@ const SignUp = () => {
 
             <Button type="submit" disabled={isSubmitting} className="mt-3">
               Sign up
+            <Button
+              type="submit"
+              disabled={isSubmitting || !isValid}
+              className="mt-3"
+            >
+              {isSubmitting ? <LoadingSpinner /> : 'Sign Up'}
             </Button>
           </div>
         </form>
