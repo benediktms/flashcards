@@ -5,7 +5,9 @@ import { signupSchema } from '../validators/auth-schema';
 import type { SignUpSchemaType } from '../validators/auth-schema';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { InputField } from '../components/InputField';
+import { api } from '../utils/api';
 import { LoadingSpinner } from '../components/LoadingSpinner';
+import { useRouter } from 'next/router';
 
 const SignUp = () => {
   const {
@@ -17,13 +19,16 @@ const SignUp = () => {
     resolver: zodResolver(signupSchema),
   });
 
+  const signup = api.auth.signUp.useMutation();
+  const router = useRouter();
+
   const onSubmit = handleSubmit(async (data) => {
-    await new Promise((resolve) => {
-      setTimeout(() => {
-        console.log(data);
-        resolve(undefined);
-      }, 3000);
-    });
+    try {
+      await signup.mutateAsync(data);
+      await router.push('/');
+    } catch (error) {
+      console.error(error);
+    }
   });
 
   return (
