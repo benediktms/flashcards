@@ -1,16 +1,16 @@
-import { type AppType } from "next/app";
-import { type Session } from "next-auth";
-import { SessionProvider } from "next-auth/react";
-import { Inter } from "@next/font/google";
+import { type AppType } from 'next/app';
+import { type Session } from 'next-auth';
+import { SessionProvider } from 'next-auth/react';
+import { Inter } from '@next/font/google';
 
-import { api } from "../utils/api";
+import { api } from '../utils/api';
 
-import "../styles/globals.css";
+import '../styles/globals.css';
+import { NotificationProvider } from '../components/Notification/NotificationContext';
 
-// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-call
 const inter = Inter({
-  subsets: ["latin"],
-  variable: "--font-inter",
+  subsets: ['latin'],
+  variable: '--font-inter',
 });
 
 const MyApp: AppType<{ session: Session | null }> = ({
@@ -18,10 +18,11 @@ const MyApp: AppType<{ session: Session | null }> = ({
   pageProps: { session, ...pageProps },
 }) => {
   return (
-    // eslint-disable-next-line @typescript-eslint/restrict-template-expressions, @typescript-eslint/no-unsafe-member-access
     <main className={`${inter.variable} font-sans`}>
       <SessionProvider session={session}>
-        <Component {...pageProps} />
+        <NotificationProvider>
+          <Component {...pageProps} />
+        </NotificationProvider>
       </SessionProvider>
     </main>
   );

@@ -8,6 +8,7 @@ import { InputField } from '../components/InputField';
 import { api } from '../utils/api';
 import { LoadingSpinner } from '../components/LoadingSpinner';
 import { useRouter } from 'next/router';
+import { useNotification } from '../components/Notification/useNotification';
 
 const SignUp = () => {
   const {
@@ -21,13 +22,24 @@ const SignUp = () => {
 
   const signup = api.auth.signUp.useMutation();
   const router = useRouter();
+  const { notify } = useNotification();
 
   const onSubmit = handleSubmit(async (data) => {
     try {
       await signup.mutateAsync(data);
+      notify({
+        type: 'success',
+        title: 'Success',
+        message: 'You have successfully signed up.',
+      });
       await router.push('/');
-    } catch (error) {
-      console.error(error);
+    } catch (e) {
+      notify({
+        type: 'error',
+        title: 'Error',
+        message: 'Something went wrong. Please try again later.',
+        location: 'bottom-right',
+      });
     }
   });
 
