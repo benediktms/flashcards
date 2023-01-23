@@ -41,9 +41,9 @@ const SignUp = () => {
             </label>
             <InputField
               disabled={isSubmitting}
-              {...register('name', { required: true })}
+              register={register}
+              path="name"
               type="text"
-              name="name"
               placeholder="Name"
             />
             <p className="text-red-500">{errors.name?.message}</p>
@@ -55,9 +55,9 @@ const SignUp = () => {
             </label>
             <InputField
               disabled={isSubmitting}
-              {...register('email', { required: true })}
-              type="text"
-              name="email"
+              register={register}
+              path="email"
+              type="email"
               placeholder="Email address"
             />
             <p className="text-red-500">{errors.email?.message}</p>
@@ -69,9 +69,9 @@ const SignUp = () => {
             </label>
             <InputField
               disabled={isSubmitting}
-              {...register('password', { required: true })}
+              register={register}
+              path="password"
               type="password"
-              name="password"
               placeholder="Password"
             />
             <p className="text-red-500">{errors.password?.message}</p>
@@ -83,17 +83,15 @@ const SignUp = () => {
             </label>
             <InputField
               disabled={isSubmitting}
-              {...register('passwordConfirmation', { required: true })}
+              register={register}
+              path="passwordConfirmation"
               type="password"
-              name="passwordConfirmation"
               placeholder="Confirm password"
             />
             <p className="text-red-500">
               {errors.passwordConfirmation?.message}
             </p>
 
-            <Button type="submit" disabled={isSubmitting} className="mt-3">
-              Sign up
             <Button
               type="submit"
               disabled={isSubmitting || !isValid}
