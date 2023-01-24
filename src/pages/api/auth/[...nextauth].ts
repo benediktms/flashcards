@@ -1,16 +1,17 @@
-import NextAuth, { type NextAuthOptions } from "next-auth";
-import CredentialsProvider from "next-auth/providers/credentials";
+import NextAuth, { type NextAuthOptions } from 'next-auth';
+import CredentialsProvider from 'next-auth/providers/credentials';
 // Prisma adapter for NextAuth, optional and can be removed
-import { PrismaAdapter } from "@next-auth/prisma-adapter";
+import { PrismaAdapter } from '@next-auth/prisma-adapter';
 
-import { env } from "../../../env/server.mjs";
-import { prisma } from "../../../server/db";
+import { env } from '../../../env/server.mjs';
+import { prisma } from '../../../server/db';
+import { verify } from 'argon2';
 
 export const authOptions: NextAuthOptions = {
   // Include user.id on session
   secret: env.NEXTAUTH_SECRET,
   session: {
-    strategy: "jwt",
+    strategy: 'jwt',
   },
   jwt: {
     secret: env.NEXTAUTH_SECRET,
@@ -35,19 +36,30 @@ export const authOptions: NextAuthOptions = {
   adapter: PrismaAdapter(prisma),
   providers: [
     CredentialsProvider({
-      name: "Credentials",
+      name: 'Credentials',
       credentials: {
-        email: { label: "Email", type: "email", placeholder: "Your email" },
-        password: { label: "Password", type: "password" },
+        email: { label: 'Email', type: 'email', placeholder: 'Your email' },
+        password: { label: 'Password', type: 'password' },
       },
       async authorize(credentials) {
-        const user = await Promise.resolve({
-          name: "John Smith",
-          email: "john.smit@example.com",
-          id: "1",
+        if (!credentials) {
+          return null;
+        }
+
+        const user = await prisma.user.findUnique({
+          where: { email: credentials.email },
         });
 
-        if (user) {
+        if (!user || !user.passwordHash) {
+          return null;
+        }
+
+        const passwordMatches = await verify(
+          user.passwordHash,
+          credentials.password,
+        );
+
+        if (passwordMatches) {
           return user;
         }
 

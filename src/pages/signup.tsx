@@ -9,6 +9,7 @@ import { api } from '../utils/api';
 import { LoadingSpinner } from '../components/LoadingSpinner';
 import { useRouter } from 'next/router';
 import { useNotification } from '../components/Notification/useNotification';
+import Head from 'next/head';
 
 const SignUp = () => {
   const {
@@ -38,66 +39,70 @@ const SignUp = () => {
         type: 'error',
         title: 'Error',
         message: 'Something went wrong. Please try again later.',
-        location: 'top-right',
       });
     }
   });
 
   return (
-    <div className="my-10 flex flex-col items-center">
-      <div className="max-w-md ">
-        <h1 className="my-5 text-3xl">Sign Up</h1>
-        {/* eslint-disable-next-line @typescript-eslint/no-misused-promises */}
-        <form onSubmit={onSubmit}>
-          <div className="mb-6 max-w-sm">
-            <InputField
-              disabled={isSubmitting}
-              register={register}
-              path="name"
-              type="text"
-              placeholder="Name"
-              label="Name"
-              error={errors.name?.message}
-            />
-            <InputField
-              disabled={isSubmitting}
-              register={register}
-              path="email"
-              type="email"
-              placeholder="Email address"
-              label="Email"
-              error={errors.email?.message}
-            />
-            <InputField
-              disabled={isSubmitting}
-              register={register}
-              path="password"
-              type="password"
-              placeholder="Password"
-              label="Password"
-              error={errors.password?.message}
-            />
-            <InputField
-              disabled={isSubmitting}
-              register={register}
-              path="passwordConfirmation"
-              type="password"
-              placeholder="Confirm password"
-              label="Confirm password"
-              error={errors.passwordConfirmation?.message}
-            />
+    <>
+      <Head>
+        <title>Sign up</title>
+      </Head>
+      <div className="my-10 flex flex-col items-center">
+        <div className="max-w-md ">
+          <h1 className="my-5 text-3xl">Sign Up</h1>
+          {/* eslint-disable-next-line @typescript-eslint/no-misused-promises */}
+          <form onSubmit={onSubmit}>
+            <div className="mb-6 max-w-sm">
+              <InputField
+                disabled={isSubmitting}
+                register={register}
+                path="name"
+                type="text"
+                placeholder="Name"
+                label="Name"
+                error={errors.name?.message}
+              />
+              <InputField
+                disabled={isSubmitting}
+                register={register}
+                path="email"
+                type="email"
+                placeholder="Email address"
+                label="Email"
+                error={errors.email?.message}
+              />
+              <InputField
+                disabled={isSubmitting}
+                register={register}
+                path="password"
+                type="password"
+                placeholder="Password"
+                label="Password"
+                error={errors.password?.message}
+              />
+              <InputField
+                disabled={isSubmitting}
+                register={register}
+                path="passwordConfirmation"
+                type="password"
+                placeholder="Confirm password"
+                label="Confirm password"
+                error={errors.passwordConfirmation?.message}
+              />
 
-            <Button
-              type="submit"
-              disabled={isSubmitting || !isValid}
-              className="mt-3"
-            >
-              {isSubmitting ? <LoadingSpinner /> : 'Sign Up'}
-            </Button>
-          </div>
-        </form>
+              <Button
+                type="submit"
+                disabled={isSubmitting || !isValid}
+                className="mt-3"
+              >
+                {isSubmitting ? <LoadingSpinner /> : 'Sign Up'}
+              </Button>
+            </div>
+          </form>
+        </div>
       </div>
-    </div>
+    </>
   );
 };
 
