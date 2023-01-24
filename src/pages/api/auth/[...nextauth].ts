@@ -1,27 +1,70 @@
-import NextAuth, { type NextAuthOptions } from "next-auth";
-import DiscordProvider from "next-auth/providers/discord";
 // Prisma adapter for NextAuth, optional and can be removed
-import { PrismaAdapter } from "@next-auth/prisma-adapter";
+import { PrismaAdapter } from '@next-auth/prisma-adapter';
+import { verify } from 'argon2';
+import NextAuth, { type NextAuthOptions } from 'next-auth';
+import CredentialsProvider from 'next-auth/providers/credentials';
 
-import { env } from "../../../env/server.mjs";
-import { prisma } from "../../../server/db";
+import { env } from '../../../env/server.mjs';
+import { prisma } from '../../../server/db';
 
 export const authOptions: NextAuthOptions = {
   // Include user.id on session
+  secret: env.NEXTAUTH_SECRET,
+  session: {
+    strategy: 'jwt',
+  },
+  jwt: {
+    secret: env.NEXTAUTH_SECRET,
+  },
   callbacks: {
-    session({ session, user }) {
-      if (session.user) {
-        session.user.id = user.id;
+    jwt({ token, user }) {
+      if (user) {
+        token.id = user.id;
       }
+      return token;
+    },
+    session({ session, user, token }) {
+      if (session.user) {
+        const id = (token.id as string) || user.id;
+        session.user.id = id;
+      }
+
       return session;
     },
   },
   // Configure one or more authentication providers
   adapter: PrismaAdapter(prisma),
   providers: [
-    DiscordProvider({
-      clientId: env.DISCORD_CLIENT_ID,
-      clientSecret: env.DISCORD_CLIENT_SECRET,
+    CredentialsProvider({
+      name: 'Credentials',
+      credentials: {
+        email: { label: 'Email', type: 'email', placeholder: 'Your email' },
+        password: { label: 'Password', type: 'password' },
+      },
+      async authorize(credentials) {
+        if (!credentials) {
+          return null;
+        }
+
+        const user = await prisma.user.findUnique({
+          where: { email: credentials.email },
+        });
+
+        if (!user || !user.passwordHash) {
+          return null;
+        }
+
+        const passwordMatches = await verify(
+          user.passwordHash,
+          credentials.password,
+        );
+
+        if (passwordMatches) {
+          return user;
+        }
+
+        return null;
+      },
     }),
     /**
      * ...add more providers here
