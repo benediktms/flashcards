@@ -38,7 +38,7 @@ const SignUp = () => {
         type: 'error',
         title: 'Error',
         message: 'Something went wrong. Please try again later.',
-        location: 'bottom-right',
+        location: 'top-right',
       });
     }
   });

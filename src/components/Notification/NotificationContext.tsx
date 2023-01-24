@@ -12,6 +12,7 @@ import {
   notificationReducer,
 } from './state';
 import { Notification } from './Notification';
+import { cn } from '../../utils/cn';
 
 type NotificationContextValue = {
   notifications: NotificationState['notifications'];
@@ -30,9 +31,7 @@ export const NotificationContext = createContext<
   NotificationContextValue | undefined
 >(undefined);
 
-export const NotificationProvider: React.FC<PropsWithChildren> = ({
-  children,
-}) => {
+export const NotificationProvider = ({ children }: PropsWithChildren) => {
   const [state, dispatch] = useReducer(
     notificationReducer,
     initialNotificationState,
@@ -62,6 +61,10 @@ export const NotificationProvider: React.FC<PropsWithChildren> = ({
       duration = 5000,
       isClosable = true,
     } = input;
+    if (location) {
+      setNotificationLocation(location);
+    }
+
     dispatch({
       type: 'ADD_NOTIFICATION',
       payload: {
@@ -69,7 +72,6 @@ export const NotificationProvider: React.FC<PropsWithChildren> = ({
         type,
         title,
         message,
-        location,
         isClosable,
       },
     });
@@ -96,6 +98,13 @@ export const NotificationProvider: React.FC<PropsWithChildren> = ({
     [state],
   );
 
+  const setNotificationLocation = (location: NotificationLocation) => {
+    dispatch({
+      type: 'SET_NOTIFICATION_LOCATION',
+      location,
+    });
+  };
+
   const value: NotificationContextValue = {
     notifications: state.notifications,
     notify,
@@ -105,7 +114,22 @@ export const NotificationProvider: React.FC<PropsWithChildren> = ({
   return (
     <>
       <NotificationContext.Provider value={value}>
-        <div className="fixed left-0 top-0 z-50 flex h-fit w-full flex-col items-end justify-center gap-3 pt-10">
+        <div
+          className={cn(
+            state.location === 'top-right'
+              ? 'top-0 right-0 items-end'
+              : state.location === 'top-left'
+              ? 'top-0 left-0'
+              : state.location === 'bottom-right'
+              ? 'bottom-0 right-0 items-end'
+              : state.location === 'bottom-left'
+              ? 'bottom-0 left-0'
+              : state.location === 'top-center'
+              ? 'top-0 items-center'
+              : 'bottom-0 items-center',
+            'fixed z-50 flex h-fit w-full flex-col justify-center gap-3 p-3',
+          )}
+        >
           {showNotification()}
         </div>
         {children}

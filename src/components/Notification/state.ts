@@ -12,7 +12,6 @@ export type Notification = {
   type: NotificationType;
   title?: string;
   message?: string;
-  location?: NotifcationLocation;
   isClosable: boolean;
 };
 type AddNotificationAction = {
@@ -25,16 +24,24 @@ type RemoveNotificationAction = {
   id: number;
 };
 
+type SetNotificationlocation = {
+  type: 'SET_NOTIFICATION_LOCATION';
+  location: NotifcationLocation;
+};
+
 export type NotificationAction =
   | AddNotificationAction
-  | RemoveNotificationAction;
+  | RemoveNotificationAction
+  | SetNotificationlocation;
 
 export type NotificationState = {
   notifications: Notification[];
+  location: NotifcationLocation;
 };
 
 export const initialNotificationState: NotificationState = {
   notifications: [],
+  location: 'top-right',
 };
 
 export const notificationReducer = (
@@ -53,6 +60,11 @@ export const notificationReducer = (
         notifications: state.notifications.filter(
           (notification) => notification.id !== action.id,
         ),
+      };
+    case 'SET_NOTIFICATION_LOCATION':
+      return {
+        ...state,
+        location: action.location,
       };
     default:
       return state;

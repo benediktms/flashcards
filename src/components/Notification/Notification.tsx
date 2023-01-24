@@ -22,21 +22,16 @@ export const Notification: React.FC<Props> = ({
           : type === 'info'
           ? 'bg-blue-300 text-blue-700'
           : 'bg-yellow-300 text-yellow-700',
-        'mr-3 rounded-md p-3 shadow-lg',
-        // TODO: should allow the notification to be based on the Notification location
-        // This means the parent element needs to be 100% of the current scren size,
-        // taking into account if the window size changes (e.g. if the user resizes the window)
+        'max-w-sm rounded-md p-3 shadow-lg',
       )}
     >
       <div className="flex justify-between">
         <strong>{title}</strong>
-        <>
-          {isClosable && (
-            <button onClick={() => closeNotification(id)}>
-              <IoIosClose />
-            </button>
-          )}
-        </>
+        {isClosable && (
+          <button onClick={() => closeNotification(id)}>
+            <IoIosClose />
+          </button>
+        )}
       </div>
       <span className="block sm:inline">{message}</span>
     </div>
