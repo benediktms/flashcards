@@ -1,10 +1,10 @@
-import { type AppType } from 'next/app';
-import { type Session } from 'next-auth';
-import { SessionProvider } from 'next-auth/react';
-import { Inter } from '@next/font/google';
-import { api } from '@/utils/api';
 import { NotificationProvider } from '@/components/Notification/NotificationContext';
 import '@/styles/globals.css';
+import { api } from '@/utils/api';
+import { Inter } from '@next/font/google';
+import { type Session } from 'next-auth';
+import { SessionProvider } from 'next-auth/react';
+import { type AppType } from 'next/app';
 
 const inter = Inter({
   subsets: ['latin'],

@@ -1,8 +1,9 @@
-import { getServerAuthSession } from '@/server/auth';
 import type {
   InferGetServerSidePropsType,
   GetServerSidePropsContext,
 } from 'next';
+
+import { getServerAuthSession } from '@/server/auth';
 
 function Me({
   id,

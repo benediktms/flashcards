@@ -1,6 +1,7 @@
-import { createTRPCRouter, publicProcedure } from '../trpc';
 import argon2 from 'argon2';
+
 import { signupSchema } from '../../../validators/auth-schema';
+import { createTRPCRouter, publicProcedure } from '../trpc';
 
 export const authRouter = createTRPCRouter({
   signUp: publicProcedure

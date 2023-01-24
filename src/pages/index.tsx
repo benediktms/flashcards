@@ -1,7 +1,8 @@
-import { type NextPage } from 'next';
-import Head from 'next/head';
+import type { NextPage } from 'next';
 import { signIn, signOut, useSession } from 'next-auth/react';
+import Head from 'next/head';
 import { useRouter } from 'next/router';
+
 import { Button } from '@/components/Button';
 import { api } from '@/utils/api';
 

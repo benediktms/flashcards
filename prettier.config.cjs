@@ -4,4 +4,6 @@ module.exports = {
   semi: true,
   singleQuote: true,
   trailingComma: 'all',
+  importOrder: ['<THIRD_PARTY_MODULES>', '^@/(.*)$', '^[./]'],
+  importOrderSeparation: true,
 };

@@ -1,5 +1,6 @@
 import type { DetailedHTMLProps, InputHTMLAttributes } from 'react';
 import type { Path, UseFormRegister } from 'react-hook-form';
+
 import { cn } from '../utils/cn';
 
 type Props<T extends Record<string, string>> = DetailedHTMLProps<

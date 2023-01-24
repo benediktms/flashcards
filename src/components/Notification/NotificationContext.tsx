@@ -4,6 +4,9 @@ import React, {
   useReducer,
   type PropsWithChildren,
 } from 'react';
+
+import { cn } from '../../utils/cn';
+import { Notification } from './Notification';
 import {
   type NotificationState,
   type NotificationType,
@@ -11,8 +14,6 @@ import {
   initialNotificationState,
   notificationReducer,
 } from './state';
-import { Notification } from './Notification';
-import { cn } from '../../utils/cn';
 
 type NotificationContextValue = {
   notifications: NotificationState['notifications'];

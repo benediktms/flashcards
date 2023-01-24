@@ -1,15 +1,16 @@
+import { zodResolver } from '@hookform/resolvers/zod';
+import Head from 'next/head';
+import { useRouter } from 'next/router';
 import React from 'react';
 import { useForm } from 'react-hook-form';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { useRouter } from 'next/router';
-import Head from 'next/head';
-import { useNotification } from '@/components/Notification/useNotification';
-import { api } from '@/utils/api';
+
+import { Button } from '@/components/Button';
 import { InputField } from '@/components/InputField';
 import { LoadingSpinner } from '@/components/LoadingSpinner';
+import { useNotification } from '@/components/Notification/useNotification';
+import { api } from '@/utils/api';
 import type { SignUpSchemaType } from '@/validators/auth-schema';
 import { signupSchema } from '@/validators/auth-schema';
-import { Button } from '@/components/Button';
 
 const SignUp = () => {
   const {

@@ -1,7 +1,8 @@
-import { cn } from '../../utils/cn';
-import { useNotification } from './useNotification';
-import { type Notification as Props } from './state';
 import { IoIosClose } from 'react-icons/io';
+
+import { cn } from '../../utils/cn';
+import { type Notification as Props } from './state';
+import { useNotification } from './useNotification';
 
 export const Notification: React.FC<Props> = ({
   type,
