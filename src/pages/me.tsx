@@ -1,8 +1,8 @@
+import { getServerAuthSession } from '@/server/auth';
 import type {
   InferGetServerSidePropsType,
   GetServerSidePropsContext,
 } from 'next';
-import { getSession } from 'next-auth/react';
 
 function Me({
   id,
@@ -17,7 +17,10 @@ function Me({
 }
 
 export async function getServerSideProps(context: GetServerSidePropsContext) {
-  const session = await getSession({ req: context.req });
+  const session = await getServerAuthSession({
+    req: context.req,
+    res: context.res,
+  });
 
   if (!session) {
     return {
