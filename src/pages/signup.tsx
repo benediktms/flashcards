@@ -1,15 +1,15 @@
 import React from 'react';
 import { useForm } from 'react-hook-form';
-import { Button } from '../components/Button';
-import { signupSchema } from '../validators/auth-schema';
-import type { SignUpSchemaType } from '../validators/auth-schema';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { InputField } from '../components/InputField';
-import { api } from '../utils/api';
-import { LoadingSpinner } from '../components/LoadingSpinner';
 import { useRouter } from 'next/router';
-import { useNotification } from '../components/Notification/useNotification';
 import Head from 'next/head';
+import { useNotification } from '@/components/Notification/useNotification';
+import { api } from '@/utils/api';
+import { InputField } from '@/components/InputField';
+import { LoadingSpinner } from '@/components/LoadingSpinner';
+import type { SignUpSchemaType } from '@/validators/auth-schema';
+import { signupSchema } from '@/validators/auth-schema';
+import { Button } from '@/components/Button';
 
 const SignUp = () => {
   const {
