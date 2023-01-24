@@ -33,7 +33,7 @@ const SignUp = () => {
         title: 'Success',
         message: 'You have successfully signed up.',
       });
-      await router.push('/');
+      await router.push('/me');
     } catch (e) {
       notify({
         type: 'error',
