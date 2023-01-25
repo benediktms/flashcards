@@ -20,24 +20,17 @@ const MyApp: AppType<{ session: Session | null }> = ({
   pageProps: { session, ...pageProps },
 }) => {
   return (
-    <>
-      <html lang="en">
-        <body
-          className={cn(
-            inter.variable,
-            'min-h-screen font-sans dark:bg-slate-900 ',
-          )}
-        >
-          <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-            <SessionProvider session={session}>
-              <NotificationProvider>
-                <Component {...pageProps} />
-              </NotificationProvider>
-            </SessionProvider>
-          </ThemeProvider>
-        </body>
-      </html>
-    </>
+    <main
+      className={cn(inter.variable, 'min-h-screen font-sans dark:bg-slate-900')}
+    >
+      <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+        <SessionProvider session={session}>
+          <NotificationProvider>
+            <Component {...pageProps} />
+          </NotificationProvider>
+        </SessionProvider>
+      </ThemeProvider>
+    </main>
   );
 };
 
