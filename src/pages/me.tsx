@@ -17,7 +17,10 @@ export default function Me({
   return (
     <MenuLayout userName={userName}>
       <div className="m-3">
-        <h1>Welcome back {userName}</h1>
+        <h2>Random Revision</h2>
+        <h2>Streaks</h2>
+        <h2>Recent</h2>
+        <h2>Upcoming</h2>
       </div>
     </MenuLayout>
   );

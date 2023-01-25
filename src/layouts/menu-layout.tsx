@@ -1,6 +1,7 @@
 import { signOut } from 'next-auth/react';
 import { useTheme } from 'next-themes';
 import { useEffect, useState, type PropsWithChildren } from 'react';
+import { BiDotsVerticalRounded } from 'react-icons/bi';
 import { BsFillMoonFill, BsFillSunFill } from 'react-icons/bs';
 
 import {
@@ -37,37 +38,50 @@ export const MenuLayout: React.FC<Props> = ({ children, userName }) => {
 
   return (
     <div>
-      <div className="flex items-center justify-between">
-        <div className="ml-3">Hello {userName}</div>
-        <Menubar className="m-2">
-          <MenubarMenu>
-            <MenubarTrigger>Cards</MenubarTrigger>
-            <MenubarContent>
-              <MenubarItem>Create Card</MenubarItem>
-              <MenubarSeparator />
-              <MenubarItem>Create Set</MenubarItem>
-              <MenubarItem>See All Sets</MenubarItem>
-            </MenubarContent>
-          </MenubarMenu>
-          <MenubarMenu>
-            <MenubarTrigger>Account</MenubarTrigger>
-            <MenubarContent>
-              <MenubarItem>Security</MenubarItem>
-              <MenubarSub>
-                <MenubarSubTrigger>Settings</MenubarSubTrigger>
-                <MenubarSubContent>
-                  <MenubarItem onClick={handleToggleTheme}>
-                    <p className="mr-3">Switch Theme</p>
-                    {theme === 'light' ? <BsFillMoonFill /> : <BsFillSunFill />}
-                  </MenubarItem>
-                </MenubarSubContent>
-              </MenubarSub>
-              <MenubarItem>Report An Issue</MenubarItem>
-              <MenubarSeparator />
-              <MenubarItem onClick={() => void signOut()}>Sign Out</MenubarItem>
-            </MenubarContent>
-          </MenubarMenu>
-        </Menubar>
+      <div className="flex items-center justify-end sm:justify-between">
+        <div className="ml-3 hidden sm:block">Hello {userName}</div>
+        <div className="hidden sm:block">
+          <Menubar className="m-2">
+            <MenubarMenu>
+              <MenubarTrigger>Cards</MenubarTrigger>
+              <MenubarContent>
+                <MenubarItem>Create Card</MenubarItem>
+                <MenubarSeparator />
+                <MenubarItem>Create Set</MenubarItem>
+                <MenubarItem>See All Sets</MenubarItem>
+              </MenubarContent>
+            </MenubarMenu>
+            <MenubarMenu>
+              <MenubarTrigger>Account</MenubarTrigger>
+              <MenubarContent>
+                <MenubarItem>Security</MenubarItem>
+                <MenubarSub>
+                  <MenubarSubTrigger>Settings</MenubarSubTrigger>
+                  <MenubarSubContent>
+                    <MenubarItem onClick={handleToggleTheme}>
+                      <p className="mr-3">Switch Theme</p>
+                      {theme === 'light' ? (
+                        <BsFillMoonFill />
+                      ) : (
+                        <BsFillSunFill />
+                      )}
+                    </MenubarItem>
+                  </MenubarSubContent>
+                </MenubarSub>
+                <MenubarItem>Report An Issue</MenubarItem>
+                <MenubarSeparator />
+                <MenubarItem onClick={() => void signOut()}>
+                  Sign Out
+                </MenubarItem>
+              </MenubarContent>
+            </MenubarMenu>
+          </Menubar>
+        </div>
+        <div className="sm:hidden">
+          <div className="mt-4 mr-5 text-[2rem] hover:cursor-pointer">
+            <BiDotsVerticalRounded />
+          </div>
+        </div>
       </div>
       {children}
     </div>
