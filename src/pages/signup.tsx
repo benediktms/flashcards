@@ -9,8 +9,7 @@ import { InputField } from '@/components/InputField';
 import { LoadingSpinner } from '@/components/LoadingSpinner';
 import { useNotification } from '@/components/Notification/useNotification';
 import { api } from '@/utils/api';
-import type { SignUpSchemaType } from '@/validators/auth-schema';
-import { signupSchema } from '@/validators/auth-schema';
+import { signupSchema, type SignUpSchemaType } from '@/validators/auth-schema';
 
 const SignUp = () => {
   const {

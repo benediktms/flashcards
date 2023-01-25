@@ -6,4 +6,6 @@ module.exports = {
   trailingComma: 'all',
   importOrder: ['<THIRD_PARTY_MODULES>', '^@/(.*)$', '^[./]'],
   importOrderSeparation: true,
+  importOrderMergeDuplicateImports: true,
+  importOrderCombineTypeAndValueImports: true,
 };

@@ -4,8 +4,9 @@ import { SessionProvider } from 'next-auth/react';
 import { ThemeProvider } from 'next-themes';
 import { type AppType } from 'next/app';
 
-import { NotificationProvider } from '@/components/Notification/NotificationContext';
 import '@/styles/globals.css';
+
+import { NotificationProvider } from '@/components/Notification/NotificationContext';
 import { api } from '@/utils/api';
 
 const inter = Inter({
