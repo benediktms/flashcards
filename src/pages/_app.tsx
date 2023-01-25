@@ -8,6 +8,7 @@ import '@/styles/globals.css';
 
 import { NotificationProvider } from '@/components/Notification/NotificationContext';
 import { api } from '@/utils/api';
+import { cn } from '@/utils/cn';
 
 const inter = Inter({
   subsets: ['latin'],
@@ -19,15 +20,24 @@ const MyApp: AppType<{ session: Session | null }> = ({
   pageProps: { session, ...pageProps },
 }) => {
   return (
-    <main className={`${inter.variable} font-sans`}>
-      <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-        <SessionProvider session={session}>
-          <NotificationProvider>
-            <Component {...pageProps} />
-          </NotificationProvider>
-        </SessionProvider>
-      </ThemeProvider>
-    </main>
+    <>
+      <html lang="en">
+        <body
+          className={cn(
+            inter.variable,
+            'min-h-screen font-sans dark:bg-slate-900 ',
+          )}
+        >
+          <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+            <SessionProvider session={session}>
+              <NotificationProvider>
+                <Component {...pageProps} />
+              </NotificationProvider>
+            </SessionProvider>
+          </ThemeProvider>
+        </body>
+      </html>
+    </>
   );
 };
 

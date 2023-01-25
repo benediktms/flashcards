@@ -2,35 +2,24 @@ import type {
   InferGetServerSidePropsType,
   GetServerSidePropsContext,
 } from 'next';
-import { useTheme } from 'next-themes';
-import { useEffect, useState } from 'react';
 
-import { Button } from '@/components/Button';
+import { FullScreenLoadingSpinner } from '@/components/FullScreenLoadingSpinner';
+import { MenuLayout } from '@/layouts/menu-layout';
 import { getServerAuthSession } from '@/server/auth';
 
-function Me({
+export default function Me({
   userName,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) {
-  const { theme, setTheme } = useTheme();
-  const [mounted, setMounted] = useState(false);
-
-  useEffect(() => {
-    setMounted(true);
-  }, []);
-
-  if (!mounted) {
-    return null;
+  if (!userName) {
+    return <FullScreenLoadingSpinner />;
   }
 
   return (
-    <div>
-      <h1>Welcome back {userName}</h1>
-      The current theme is: {theme}
-      <Button className="mx-2" onClick={() => setTheme('light')}>
-        Light Mode
-      </Button>
-      <Button onClick={() => setTheme('dark')}>Dark Mode</Button>
-    </div>
+    <MenuLayout userName={userName}>
+      <div className="m-3">
+        <h1>Welcome back {userName}</h1>
+      </div>
+    </MenuLayout>
   );
 }
 
@@ -57,5 +46,3 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
     },
   };
 }
-
-export default Me;
