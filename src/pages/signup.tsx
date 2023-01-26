@@ -53,7 +53,6 @@ const SignUp = () => {
       <div className="my-10 flex flex-col items-center">
         <div className="max-w-md ">
           <h1 className="my-5 text-3xl">Sign Up</h1>
-          {/* eslint-disable-next-line @typescript-eslint/no-misused-promises */}
           <form onSubmit={onSubmit}>
             <div className="mb-6 max-w-sm">
               <InputField
