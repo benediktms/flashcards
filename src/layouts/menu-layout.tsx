@@ -52,6 +52,16 @@ export const MenuLayout: React.FC<Props> = ({ children, userName }) => {
               </MenubarContent>
             </MenubarMenu>
             <MenubarMenu>
+              <MenubarTrigger>Lessons</MenubarTrigger>
+              <MenubarContent>
+                <MenubarItem>Upcoming</MenubarItem>
+                <MenubarItem>Previous</MenubarItem>
+                <MenubarSeparator />
+                <MenubarItem>Lesson Sets</MenubarItem>
+                <MenubarItem>Schedule Lesson</MenubarItem>
+              </MenubarContent>
+            </MenubarMenu>
+            <MenubarMenu>
               <MenubarTrigger>Account</MenubarTrigger>
               <MenubarContent>
                 <MenubarItem>Security</MenubarItem>

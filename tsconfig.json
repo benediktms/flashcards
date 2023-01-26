@@ -25,7 +25,8 @@
     "**/*.tsx",
     "**/*.cjs",
     "**/*.mjs",
-    ".prettierrc.js"
+    ".prettierrc.js",
+    "tailwind.config.js"
   ],
   "exclude": ["node_modules"]
 }

@@ -20,9 +20,7 @@ const MyApp: AppType<{ session: Session | null }> = ({
   pageProps: { session, ...pageProps },
 }) => {
   return (
-    <main
-      className={cn(inter.variable, 'min-h-screen font-sans dark:bg-slate-900')}
-    >
+    <main className={cn(inter.variable)}>
       <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
         <SessionProvider session={session}>
           <NotificationProvider>
