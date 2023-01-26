@@ -9,6 +9,7 @@ import { InputField } from '@/components/InputField';
 import { LoadingSpinner } from '@/components/LoadingSpinner';
 import { useNotification } from '@/components/Notification/useNotification';
 import { api } from '@/utils/api';
+import { normalizeError } from '@/utils/normalize-error';
 import { signupSchema, type SignUpSchemaType } from '@/validators/auth-schema';
 
 const SignUp = () => {
@@ -35,10 +36,11 @@ const SignUp = () => {
       });
       await router.push('/me');
     } catch (e) {
+      const error = normalizeError(e);
       notify({
         type: 'error',
         title: 'Error',
-        message: 'Something went wrong. Please try again later.',
+        message: error.message,
       });
     }
   });
