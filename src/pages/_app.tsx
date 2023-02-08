@@ -1,8 +1,8 @@
 import { Inter } from '@next/font/google';
-import { type Session } from 'next-auth';
+import type { Session } from 'next-auth';
 import { SessionProvider } from 'next-auth/react';
 import { ThemeProvider } from 'next-themes';
-import { type AppType } from 'next/app';
+import type { AppType } from 'next/app';
 
 import '@/styles/globals.css';
 

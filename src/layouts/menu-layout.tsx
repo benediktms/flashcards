@@ -15,13 +15,14 @@ import {
   MenubarSubContent,
   MenubarSubTrigger,
   MenubarTrigger,
-} from '@/components/Menubar';
+} from '@/components/Primitives/Menubar';
 
 type Props = PropsWithChildren & {
-  userName: string;
+  userName?: string;
+  image?: string;
 };
 
-export const MenuLayout: React.FC<Props> = ({ children, userName }) => {
+export const MenuLayout: React.FC<Props> = ({ children }) => {
   const { theme, setTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
 
@@ -44,13 +45,15 @@ export const MenuLayout: React.FC<Props> = ({ children, userName }) => {
       </Head>
       <div>
         <div className="flex items-center justify-end sm:justify-between">
-          <div className="ml-3 hidden sm:block">Hello {userName}</div>
+          <div className="ml-3 hidden sm:block">
+            <h2>Flashcards</h2>
+          </div>
           <div className="hidden sm:block">
             <Menubar className="m-2">
               <MenubarMenu>
                 <MenubarTrigger>Cards</MenubarTrigger>
                 <MenubarContent>
-                  <MenubarItem>Create Card</MenubarItem>
+                  <MenubarItem>Create flashcard</MenubarItem>
                   <MenubarSeparator />
                   <MenubarItem>Create Set</MenubarItem>
                   <MenubarItem>See All Sets</MenubarItem>
