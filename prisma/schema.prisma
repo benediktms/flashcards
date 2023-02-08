@@ -73,31 +73,46 @@ model Membership {
 }
 
 model FlashcardCollection {
-  id        String   @id @default(cuid())
-  name      String   @default("Default Collection")
-  createdAt DateTime @default(now())
-  updatedAt DateTime @default(now())
-  User      User?    @relation(fields: [userId], references: [id])
-  userId    String?
+  id         String      @id @default(cuid())
+  name       String      @default("Default Collection")
+  createdAt  DateTime    @default(now())
+  updatedAt  DateTime    @default(now())
+  User       User?       @relation(fields: [userId], references: [id])
+  userId     String?
+  flashcards Flashcard[]
+
+  @@unique([name, userId])
 }
 
 model Flashcard {
-  id                 String   @id @default(cuid())
-  createdAt          DateTime @default(now())
-  updatedAt          DateTime @default(now())
-  term               String
-  termTranslation    String
-  example            String?
-  exampleTranslation String?
-  tags               Tag[]
-  User               User?    @relation(fields: [userId], references: [id])
-  userId             String?
+  id                    String              @id @default(cuid())
+  createdAt             DateTime            @default(now())
+  updatedAt             DateTime            @default(now())
+  term                  String
+  termTranslation       String
+  example               String?
+  exampleTranslation    String?
+  User                  User                @relation(fields: [userId], references: [id])
+  userId                String
+  TagsOnFlashcards      TagsOnFlashcards[]
+  FlashcardCollection   FlashcardCollection @relation(fields: [flashcardCollectionId], references: [id])
+  flashcardCollectionId String
 }
 
 model Tag {
-  id           String      @id @default(cuid())
-  name         String
-  Membership   Membership  @relation(fields: [membershipId], references: [id], onDelete: Cascade)
-  membershipId String
-  Flashcard    Flashcard[]
+  id               String             @id @default(cuid())
+  name             String
+  Membership       Membership         @relation(fields: [membershipId], references: [id], onDelete: Cascade)
+  membershipId     String
+  TagsOnFlashcards TagsOnFlashcards[]
+}
+
+model TagsOnFlashcards {
+  id          String    @id @default(cuid())
+  Flashcard   Flashcard @relation(fields: [flashcardId], references: [id], onDelete: Cascade)
+  flashcardId String
+  Tag         Tag       @relation(fields: [tagId], references: [id], onDelete: Cascade)
+  tagId       String
+
+  @@unique([flashcardId, tagId])
 }

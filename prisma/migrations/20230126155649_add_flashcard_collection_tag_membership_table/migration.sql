@@ -41,16 +41,16 @@ CREATE TABLE "Tag" (
 );
 
 -- CreateTable
-CREATE TABLE "_FlashcardToTag" (
-    "A" TEXT NOT NULL,
-    "B" TEXT NOT NULL
+CREATE TABLE "TagsOnFlashcards" (
+    "id" TEXT NOT NULL,
+    "flashcardId" TEXT NOT NULL,
+    "tagId" TEXT NOT NULL,
+
+    CONSTRAINT "TagsOnFlashcards_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateIndex
-CREATE UNIQUE INDEX "_FlashcardToTag_AB_unique" ON "_FlashcardToTag"("A", "B");
-
--- CreateIndex
-CREATE INDEX "_FlashcardToTag_B_index" ON "_FlashcardToTag"("B");
+CREATE UNIQUE INDEX "TagsOnFlashcards_flashcardId_tagId_key" ON "TagsOnFlashcards"("flashcardId", "tagId");
 
 -- AddForeignKey
 ALTER TABLE "Membership" ADD CONSTRAINT "Membership_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE CASCADE ON UPDATE CASCADE;
@@ -65,7 +65,7 @@ ALTER TABLE "Flashcard" ADD CONSTRAINT "Flashcard_userId_fkey" FOREIGN KEY ("use
 ALTER TABLE "Tag" ADD CONSTRAINT "Tag_membershipId_fkey" FOREIGN KEY ("membershipId") REFERENCES "Membership"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "_FlashcardToTag" ADD CONSTRAINT "_FlashcardToTag_A_fkey" FOREIGN KEY ("A") REFERENCES "Flashcard"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE "TagsOnFlashcards" ADD CONSTRAINT "TagsOnFlashcards_flashcardId_fkey" FOREIGN KEY ("flashcardId") REFERENCES "Flashcard"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "_FlashcardToTag" ADD CONSTRAINT "_FlashcardToTag_B_fkey" FOREIGN KEY ("B") REFERENCES "Tag"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE "TagsOnFlashcards" ADD CONSTRAINT "TagsOnFlashcards_tagId_fkey" FOREIGN KEY ("tagId") REFERENCES "Tag"("id") ON DELETE CASCADE ON UPDATE CASCADE;
