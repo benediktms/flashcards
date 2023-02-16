@@ -10,8 +10,23 @@ export const collectionRouter = createTRPCRouter({
         where: {
           userId: ctx.session.user.id,
         },
+        include: { flashcards: true },
       });
 
       return collections;
+    }),
+  getSingleCollection: protectedProcedure
+    .input(z.object({ collectionId: z.string() }))
+    .query(async ({ ctx, input }) => {
+      const collection = await ctx.prisma.flashcardCollection.findUniqueOrThrow(
+        {
+          where: {
+            id: input.collectionId,
+          },
+          include: { flashcards: true },
+        },
+      );
+
+      return collection;
     }),
 });

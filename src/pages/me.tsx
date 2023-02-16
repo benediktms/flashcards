@@ -3,6 +3,7 @@ import type {
   InferGetServerSidePropsType,
   GetServerSidePropsContext,
 } from 'next';
+import Link from 'next/link';
 import { useForm } from 'react-hook-form';
 
 import { Container } from '@/components/Container';
@@ -21,6 +22,7 @@ import { Textarea } from '@/components/Primitives/Textarea';
 import { MenuLayout } from '@/layouts/menu-layout';
 import { getServerAuthSession } from '@/server/auth';
 import { api } from '@/utils/api';
+import { cn } from '@/utils/cn';
 import { normalizeError } from '@/utils/normalize-error';
 import {
   createFlashcardSchema,
@@ -138,13 +140,30 @@ export default function Me({
                   {collections.isRefetching ? (
                     <LoadingSpinner />
                   ) : (
-                    collections.data?.map((collection) => {
-                      return (
-                        <div key={collection.id}>
-                          <h3>{collection.name}</h3>
-                        </div>
-                      );
-                    })
+                    <div className="flex space-x-3">
+                      {collections.data?.map((collection) => {
+                        return (
+                          <div
+                            key={collection.id}
+                            className={cn(
+                              'm-1 rounded-lg p-6',
+                              'bg-slate-100 dark:bg-slate-700',
+                              'hover:ring-2 hover:ring-slate-400',
+                            )}
+                          >
+                            <div className="flex flex-col">
+                              <Link
+                                href={`/collection/${collection.id}`}
+                                className="cursor-pointer underline"
+                              >
+                                {collection.name}
+                              </Link>
+                              <p>{collection.flashcards.length} terms</p>
+                            </div>
+                          </div>
+                        );
+                      })}
+                    </div>
                   )}
                 </AccordionContent>
               </AccordionItem>
