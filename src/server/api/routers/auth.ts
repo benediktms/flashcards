@@ -34,7 +34,6 @@ export const authRouter = createTRPCRouter({
             }
           }
         } else {
-          console.error(error);
           throw new Error('Something went wrong');
         }
       }
