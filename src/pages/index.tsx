@@ -3,7 +3,7 @@ import { signIn, signOut, useSession } from 'next-auth/react';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
 
-import { Button } from '@/components/Button';
+import { Button } from '@/components/Primitives/Button';
 import { api } from '@/utils/api';
 
 const Home: NextPage = () => {
@@ -12,9 +12,7 @@ const Home: NextPage = () => {
       <Head>
         <title>Flashcards</title>
       </Head>
-      <main className="">
-        <AuthShowcase />
-      </main>
+      <AuthShowcase />
     </>
   );
 };
@@ -36,18 +34,16 @@ const AuthShowcase: React.FC = () => {
         {sessionData && <span>Logged in as {sessionData.user?.name}</span>}
         {secretMessage && <span> - {secretMessage}</span>}
       </p>
-      <Button
-        // className="rounded-full bg-white/10 px-10 py-3 font-semibold text-white no-underline transition hover:bg-white/20"
-        onClick={sessionData ? () => void signOut() : () => void signIn()}
-      >
-        {sessionData ? 'Sign out' : 'Sign in'}
-      </Button>
-      <Button
-        // className="rounded-full bg-white/10 px-10 py-3 font-semibold text-white no-underline transition hover:bg-white/20"
-        onClick={() => void router.push('/signup')}
-      >
-        Sign up
-      </Button>
+      <span>
+        <Button
+          className="mr-2"
+          onClick={sessionData ? () => void signOut() : () => void signIn()}
+        >
+          {sessionData ? 'Sign Out' : 'Sign In'}
+        </Button>
+        <Button onClick={() => void router.push('/signup')}>Sign Up</Button>
+      </span>
+      <Button onClick={() => void router.push('/me')}>Go To Profile</Button>
     </div>
   );
 };

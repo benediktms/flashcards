@@ -1,12 +1,14 @@
 import { Inter } from '@next/font/google';
-import { type Session } from 'next-auth';
+import type { Session } from 'next-auth';
 import { SessionProvider } from 'next-auth/react';
 import { ThemeProvider } from 'next-themes';
-import { type AppType } from 'next/app';
+import type { AppType } from 'next/app';
+
+import '@/styles/globals.css';
 
 import { NotificationProvider } from '@/components/Notification/NotificationContext';
-import '@/styles/globals.css';
 import { api } from '@/utils/api';
+import { cn } from '@/utils/cn';
 
 const inter = Inter({
   subsets: ['latin'],
@@ -18,7 +20,7 @@ const MyApp: AppType<{ session: Session | null }> = ({
   pageProps: { session, ...pageProps },
 }) => {
   return (
-    <main className={`${inter.variable} font-sans`}>
+    <main className={cn(inter.variable)}>
       <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
         <SessionProvider session={session}>
           <NotificationProvider>

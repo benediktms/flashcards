@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { cn } from '../utils/cn';
+import { cn } from '../../utils/cn';
 
 type Props = React.DetailedHTMLProps<
   React.ButtonHTMLAttributes<HTMLButtonElement>,
@@ -12,7 +12,7 @@ export const Button = ({ children, ...props }: Props) => {
     <button
       {...props}
       className={cn(
-        'cursor-pointer rounded-md p-4',
+        'cursor-pointer rounded-md px-4 py-2 sm:text-xl',
         'bg-blue-600 text-white hover:bg-blue-500',
         'dark:bg-blue-400 dark:text-slate-800 dark:hover:bg-blue-300',
         'transition duration-200 ease-in-out',

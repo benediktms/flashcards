@@ -4,13 +4,13 @@ import { useRouter } from 'next/router';
 import React from 'react';
 import { useForm } from 'react-hook-form';
 
-import { Button } from '@/components/Button';
-import { InputField } from '@/components/InputField';
-import { LoadingSpinner } from '@/components/LoadingSpinner';
 import { useNotification } from '@/components/Notification/useNotification';
+import { Button } from '@/components/Primitives/Button';
+import { InputField } from '@/components/Primitives/InputField';
+import { LoadingSpinner } from '@/components/Primitives/LoadingSpinner';
 import { api } from '@/utils/api';
-import type { SignUpSchemaType } from '@/validators/auth-schema';
-import { signupSchema } from '@/validators/auth-schema';
+import { normalizeError } from '@/utils/normalize-error';
+import { signupSchema, type SignUpSchemaType } from '@/validators/auth-schema';
 
 const SignUp = () => {
   const {
@@ -36,10 +36,11 @@ const SignUp = () => {
       });
       await router.push('/me');
     } catch (e) {
+      const error = normalizeError(e);
       notify({
         type: 'error',
         title: 'Error',
-        message: 'Something went wrong. Please try again later.',
+        message: error.message,
       });
     }
   });
@@ -49,10 +50,10 @@ const SignUp = () => {
       <Head>
         <title>Sign up</title>
       </Head>
+
       <div className="my-10 flex flex-col items-center">
         <div className="max-w-md ">
           <h1 className="my-5 text-3xl">Sign Up</h1>
-          {/* eslint-disable-next-line @typescript-eslint/no-misused-promises */}
           <form onSubmit={onSubmit}>
             <div className="mb-6 max-w-sm">
               <InputField
